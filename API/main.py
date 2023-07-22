@@ -27,12 +27,11 @@ class School(BaseModel):
 
     
 
-#receive sender's half of the transaction information and store it to the temporary database
 @app.get("/")
-async def send():
-    pass
+async def test():
+    return {"test": "Success"}
 
-@app.post("/api/v1/addschool")
+@app.get("/api/v1/addschool")
 async def send(school: School):
     pass
     
