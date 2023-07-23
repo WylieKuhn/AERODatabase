@@ -2,7 +2,7 @@
   
 ## The Basics  
 - This is currently a work in progress  
-- The frontend is written in [React](https://react.dev/) and [Material UI](https://mui.com/).  
+- The frontend is written in [React](https://react.dev/) and [Material UI](https://mui.com/) and uses [MUI tel input](https://viclafouch.github.io/mui-tel-input/).  
 - The backend will be written [FastAPI](https://fastapi.tiangolo.com/) running on [Uvicorn](https://www.uvicorn.org/).  
   
 ## To Do: First Goals, 18-24 Months  
