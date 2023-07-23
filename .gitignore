@@ -27,3 +27,5 @@ API/__pycache__/
 API/phone_mimic_Script.py
 
 API/key_file.py
+
+API/test.py
