@@ -7,7 +7,7 @@
   
 ## To Do: First Goals, 18-24 Months  
 ### API and Adding/Searching for Schools
-- ~~Fix Bug where the first entered charater of an entered string in a MUI component registers as an empty string~~.  
+- ~~Fix Bug where the first entered character of an entered string in a MUI component registers as an empty string~~.  
 - Make frontend page send data to API backend
 - Set up the backend API to recieve info from frontend and store in a database.  
 - Make search page send criteria to API backend.  
