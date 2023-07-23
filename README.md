@@ -8,11 +8,11 @@
 ## To Do: First Goals, 18-24 Months  
 ### API and Adding/Searching for Schools
 - ~~Fix Bug where the first entered character of an entered string in a MUI component registers as an empty string~~.  
-- Make frontend page send data to API backend
-- Set up the backend API to recieve info from frontend and store in a database.  
+- ~~Make frontend page send data to API backend~~.
+- ~~Set up the backend API to recieve info from frontend and store in a database~~.  
 - Make search page send criteria to API backend.  
 - Make API search database based on criteria and get results.  
-- Return results to frontend fo display.  
+- Return results to frontend for display.  
   
 ### Login  
 - Figure Out how to authenticate users and only allow them to add schools/orgs if they're a member.  
