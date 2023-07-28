@@ -4,6 +4,8 @@ from key_file import mongoKey
 from pymongo.mongo_client import MongoClient
 from fastapi.middleware.cors import CORSMiddleware
 from uuid import uuid4
+from fastapi.encoders import jsonable_encoder
+from fastapi.responses import JSONResponse
 
 app = FastAPI()
 #define FastAPI app 
@@ -31,8 +33,20 @@ class SchoolModel(BaseModel):
     tMax:int
     consent:bool
 
-    
-
+class Search(BaseModel):
+    democratic: bool | None = None
+    sudbury: bool | None = None
+    hsCoOp: bool | None = None
+    montessori: bool | None = None
+    vcfirm: bool | None = None
+    consulting: bool | None = None
+    public: bool | None = None
+    slidingscale: bool | None = None
+    alc: bool | None = None
+    AEROMember: bool | None = None
+    online: bool | None = None
+    inPerson: bool | None = None
+    sas: bool | None = None
     
 
 @app.get("/")
@@ -69,3 +83,23 @@ async def send(school: SchoolModel):
         print(x)
     except Exception as e:
         print(e)
+
+@app.post("/api/v1/search")
+async def post(search_params: Search):
+    
+    
+
+    categories = ["Democratic", "Sudbury"]
+
+    # The query filter.
+    query_filter = {
+    "categories": {
+        "$in": categories
+    }
+    }
+    # The cursor object.
+    results = col.find(query_filter)
+
+    print(results.collection.estimated_document_count)
+       
+    return list(results)

@@ -4,17 +4,30 @@ import '../App.css';
 import TextField from '@mui/material/TextField';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import Checkbox from '@mui/material/Checkbox';
-import { Grid, Link, Typography } from '@mui/material';
+import { Grid, Link, Typography, Button } from '@mui/material';
 import ComboBox from '../components/combo';
 import DiscreteSlider from '../components/slider';
 import CountryBox from '../components/countrybox';
 
-function Search() {
+type Organization = {
+  _id: string
+  name:string
+  address:string
+  city:string
+  state:string
+  postCode:string
+  phone:string
+  email:string
+  country:string
+  categories:Array<string>
+  tMin:Number
+  tMax:Number
+  consent:boolean
+}
 
-  const results = [
-    { '_id': '8749e922-4708-47b0-9de2-fa03695eda85', 'name': 'Martinez Group', 'address': '53152 Joel Plaza Suite 759', 'city': 'Valenzuelaview', 'state': 'NY', 'postCode': '39297', 'country': 'USA', 'phone': '6999243881', 'email': 'danielgibson@hoffman.biz', 'categories': [{ 'democratic': true, 'sudbury': true, 'hsCoOp': true, 'AEROMember': false, 'online': true, 'inPerson': false, 'sas': false }], 'tMin': 1000, 'tMax': 10000, 'consent': true },
-    { '_id': 'faa28e7a-4042-4114-b763-9bd69d7b1df9', 'name': 'Blackwell Ltd', 'address': '2319 Sarah Turnpike', 'city': 'Karenport', 'state': 'NY', 'postCode': '59798', 'country': 'USA', 'phone': '686-275-4847x85656', 'email': 'maryreeves@powell-stevenson.com', 'categories': [{ 'democratic': true, 'sudbury': false, 'hsCoOp': true, 'AEROMember': false, 'online': false, 'inPerson': true, 'sas': false }], 'tMin': 1000, 'tMax': 10000, 'consent': true },
-    { '_id': 'a0c4f567-01d1-4a78-982a-28a4ed598826', 'name': 'Walker, Harper and Wallace', 'address': '26132 Sandy Grove Suite 527', 'city': 'Amyland', 'state': 'NY', 'postCode': '52445', 'country': 'USA', 'phone': '3037563569', 'email': 'olsontrevor@reyes.com', 'categories': [{ 'democratic': true, 'sudbury': false, 'hsCoOp': true, 'AEROMember': true, 'online': true, 'inPerson': true, 'sas': true }], 'tMin': 1000, 'tMax': 10000, 'consent': true }]
+function Search() {
+   
+  
 
   const [demVal, setDem] = React.useState(false);
   const handleDem = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -94,6 +107,40 @@ function Search() {
     setConsulting(event.target.checked);
     console.log(consultingVal)
   };
+
+  const [stateVal, setStateVal] = React.useState("");
+  const handleStateval = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setStateVal(event.target.value);
+    console.log(stateVal)
+  };
+
+  var searchoptions = JSON.stringify({
+    
+    democratic: demVal,
+    sudbury: sudVal,
+    hsCoOp: homeVal,
+    montessori: montVal,
+    vcfirm: VCVal,
+    consulting: consultingVal,
+    public: publicVal,
+    slidingscale: slidingScaleVal,
+    alc: ALCVal,
+    AEROMember: memberVal,
+    online: onlineVal,
+    inPerson: inPersonVal,
+    sas: SasVal,
+  })
+
+
+  const [results, setResults] = React.useState<Array<Organization>>([]);
+
+  function searchData() {
+    fetch("http://127.0.0.1:8000/api/v1/search", {
+      method: 'POST',
+      headers: {"Content-Type": "application/json"},
+      body: searchoptions,
+    }).then(response => response.json()).then(data => setResults(data));
+  }
 
 
   return (
@@ -195,17 +242,13 @@ function Search() {
               </Typography>
             </Grid>
 
-            <Grid item md={6} xs={12}>
-              <ComboBox />
-            </Grid>
-
-            <Grid item md={6} xs={12}>
-              <CountryBox />
+            <Grid item xs={12}>
+              <Button variant="contained" onClick={searchData}>Search</Button>
             </Grid>
 
             <Grid item xs={12}>
               {
-                results.map((item) => {
+                results.map((item:Organization) => {
                   return (
                     <div>
                       <Grid container>
@@ -223,7 +266,7 @@ function Search() {
                           </Typography>
 
                           <Typography>
-                            Tuition Range: ${item.tMin} - ${item.tMax}
+                            Tuition Range: ${String(item.tMin)} - ${String(item.tMax)}
                           </Typography>
 
                           <Link href={`https://www.google.com/maps/place/${item.address},+${item.city},+${item.state}+${item.postCode}/`} target="_blank" rel="noreferrer">
@@ -238,6 +281,8 @@ function Search() {
                 })
               }
             </Grid>
+
+            
 
           </Grid>
         </Grid>
