@@ -1,13 +1,12 @@
 import React from 'react';
-import { useState } from 'react';
 import '../App.css';
 import TextField from '@mui/material/TextField';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import Checkbox from '@mui/material/Checkbox';
 import { Grid, Link, Typography, Button } from '@mui/material';
-import ComboBox from '../components/combo';
-import DiscreteSlider from '../components/slider';
 import CountryBox from '../components/countrybox';
+import StatesBox from '../components/combo';
+import Autocomplete from '@mui/material/Autocomplete/Autocomplete';
 
 type Organization = {
   _id: string
@@ -26,6 +25,74 @@ type Organization = {
 }
 
 function Search() {
+
+  function StatesBox() {
+
+    const USStates = [
+      { label: 'Alabama', state: "AL" },
+      { label: 'Alaska', state: "AK" },
+      { label: 'Arizona', state: "AZ" },
+      { label: 'Arkansas', state: "AR" },
+      { label: 'California', state: "CA" },
+      { label: 'Colorado', state: "CO" },
+      { label: 'Connecticut', state: "CT" },
+      { label: 'Delaware', state: "DE" },
+      { label: 'Florida', state: "FL" },
+      { label: 'Georgia', state: "GA" },
+      { label: 'Hawaii', state: "HI" },
+      { label: 'Idaho', state: "ID" },
+      { label: 'Illinois', state: "IL" },
+      { label: 'Indiana', state: "IN" },
+      { label: 'Iowa', state: "IA" },
+      { label: 'Kansas', state: "KA" },
+      { label: 'Kentucky', state: "KY" },
+      { label: 'Louisiana', state: "LA" },
+      { label: 'Maine', state: "ME" },
+      { label: 'Maryland', state: "MD" },
+      { label: 'Massachusetts', state: "MA" },
+      { label: 'Michigan', state: "MI" },
+      { label: 'Minnesota', state: "MN" },
+      { label: 'Mississippi', state: "MS" },
+      { label: 'Missouri', state: "MO" },
+      { label: 'Montana', state: "MT" },
+      { label: 'Nebraska', state: "NE" },
+      { label: 'Nevada', state: "NV" },
+      { label: 'New Hampshire', state: "NH" },
+      { label: 'New Jersey', state: "NJ" },
+      { label: 'New Mexico', state: "NM" },
+      { label: 'New York', state: "NY" },
+      { label: 'North Carolina', state: "NC" },
+      { label: 'North Dakota', state: "ND" },
+      { label: 'Ohio', state: "OH" },
+      { label: 'Oklahoma', state: "OK" },
+      { label: 'Oregon', state: "OR" },
+      { label: 'Pennsylvania', state: "PA" },
+      { label: 'Rhode Island', state: "RI" },
+      { label: 'South Carolina', state: "SC" },
+      { label: 'South Daktoa', state: "SD" },
+      { label: 'Tennessee', state: "TN" },
+      { label: 'Texas', state: "TX" },
+      { label: 'Utah', state: "UT" },
+      { label: 'Vermont', state: "VT" },
+      { label: 'Virginia', state: "VA" },
+      { label: 'Washington', state: "WA" },
+      { label: 'West Virginia', state: "WV" },
+      { label: 'Wisconsin', state: "WI" },
+      { label: 'Wyoming', state: "WY" }
+      ];
+
+      return (
+        <Autocomplete
+          disablePortal
+          getOptionLabel={(option) => option.label}
+          onChange={handleStateval}
+          id="US-State-Box"
+          options={USStates}
+          sx={{ width: 200 }}
+          renderInput={(params) => <TextField {...params} label={stateVal?.label} />}
+        />
+      );
+    }
    
   
 
@@ -108,11 +175,26 @@ function Search() {
     console.log(consultingVal)
   };
 
-  const [stateVal, setStateVal] = React.useState("");
-  const handleStateval = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setStateVal(event.target.value);
-    console.log(stateVal)
+  const [collegeVal, setCollege] = React.useState(false);
+  const handleCollege = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setCollege(event.target.checked);
+    console.log(collegeVal)
   };
+
+  const [highSchoolVal, setHighSchool] = React.useState(false);
+  const handleHighSchool = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setHighSchool(event.target.checked);
+    console.log(highSchoolVal)
+  };
+
+
+  const [stateVal, setStateVal] = React.useState<{ label: string; state: string } | null>(null);
+  const handleStateval = (event: React.ChangeEvent<{}>, value: { label: string; state: string } | null) => {
+    setStateVal(value);
+    console.log(value?.state);
+  }
+
+  
 
   var searchoptions = JSON.stringify({
     
@@ -129,6 +211,9 @@ function Search() {
     online: onlineVal,
     inPerson: inPersonVal,
     sas: SasVal,
+    college: collegeVal,
+    highSchool: highSchoolVal,
+    state: stateVal?.state 
   })
 
 
@@ -146,7 +231,7 @@ function Search() {
   return (
     <div className="App">
       <br />
-      <h2>Search For A School or Organization</h2>
+      <Typography>Search For A School Or Organization</Typography>
       <Grid container spacing={2} sx={{ width: "100%" }} alignItems={"center"} justifyContent={"center"}>
 
         <Grid item xs={7}>
@@ -226,20 +311,24 @@ function Search() {
 
             <Grid item md={3} xs={12}>
               <Typography paragraph align='left' padding={0}>
-                <FormControlLabel control={<Checkbox value={memberVal} onChange={handleMember} />} label="Online" />
+                <FormControlLabel control={<Checkbox value={memberVal} onChange={handleOnline} />} label="Online" />
               </Typography>
             </Grid>
 
             <Grid item md={3} xs={12}>
               <Typography paragraph align='left' padding={0}>
-                <FormControlLabel control={<Checkbox value={memberVal} onChange={handleMember} />} label="PH" />
+                <FormControlLabel control={<Checkbox value={memberVal} onChange={handleCollege} />} label="College/University" />
               </Typography>
             </Grid>
 
             <Grid item md={3} xs={12}>
               <Typography paragraph align='left' padding={0}>
-                <FormControlLabel control={<Checkbox value={memberVal} onChange={handleMember} />} label="PH" />
+                <FormControlLabel control={<Checkbox value={memberVal} onChange={handleHighSchool} />} label="High School" />
               </Typography>
+            </Grid>
+
+            <Grid item md={3} xs={12}>
+              <StatesBox />
             </Grid>
 
             <Grid item xs={12}>
@@ -263,6 +352,10 @@ function Search() {
 
                           <Typography>
                             Contact: {item.phone}, {item.email}
+                          </Typography>
+
+                          <Typography>
+                            Categories: {String(item.categories)}
                           </Typography>
 
                           <Typography>
