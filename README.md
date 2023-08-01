@@ -38,7 +38,22 @@
 ### Network Data  
 - Set up page that displays data about the AERO network of schools and members for the public.  
 - Set up a private admin data dashboard to show member and financial data.  
-
+  
+# Database Schema  
+## Schools/Orgs  
+- ID: UUID4 String
+- Name of organization: String  
+- Street Address: String  
+- City: String  
+- State: String  
+- Country: String  
+- Phone Number: String  
+- Email: String 
+- School Categories: Array (Democratic, Sudbury, Etc) 
+- Description: String   
+- Tuition Minimum: Int  
+- Tuition Maximum: Int  
+- Consent: Bool (Confirms permission to add and manage listing)  
 
 
 
