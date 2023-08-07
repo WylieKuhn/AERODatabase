@@ -1,11 +1,13 @@
 from fastapi import FastAPI
 from pydantic import BaseModel
-from keyfile import mongokey
+from key_file import mongoKey
 from pymongo.mongo_client import MongoClient
 from fastapi.middleware.cors import CORSMiddleware
 from uuid import uuid4
 from fastapi.encoders import jsonable_encoder
 from fastapi.responses import JSONResponse
+from datetime import datetime, timedelta
+import time
 
 app = FastAPI()
 origins = [
@@ -23,7 +25,7 @@ app.add_middleware(
 
 #define FastAPI app 
 
-uri = f"mongodb+srv://wyliekuhn:{mongokey}@cluster0.xg1yk.mongodb.net/?retryWrites=true&w=majority"
+uri = f"mongodb+srv://wyliekuhn:{mongoKey}@cluster0.xg1yk.mongodb.net/?retryWrites=true&w=majority"
 #Defining MongoDB Connections
 client = MongoClient(uri)
 db = client['AERO']
@@ -48,6 +50,9 @@ class SchoolModel(BaseModel):
     tMin:int
     tMax:int
     consent:bool
+
+class Expiring(BaseModel):
+    daysOut: int
 
 class Search(BaseModel):
     democratic: bool | None = None
@@ -179,6 +184,40 @@ async def totalOrgs():
         "consent": True
         }
 
-    x=col.count_documents(query_filter)
-    print(x)
-    return x
+    orgtotal=col.count_documents(query_filter)
+    print(orgtotal)
+    return orgtotal
+
+@app.get("/api/v1/totalmembers")
+async def totalMembers():
+    
+    query_filter = {
+        "active_member": True
+        }
+
+    membertotal=col.count_documents(query_filter)
+    print(membertotal)
+    return membertotal
+
+@app.get("/api/v1/approvals")
+async def approvals():
+    
+    query_filter = {
+        "approved": False
+        }
+
+    approvalneeded=col.count_documents(query_filter)
+    
+    return approvalneeded
+
+@app.post("/api/v1/expiration")
+async def expiration(daysout:Expiring):
+        
+    daysout = datetime.now()+ timedelta(days=daysout.daysOut)
+
+    enddate = datetime.timestamp(daysout)*1000
+    startdate = datetime.timestamp(datetime.now())*1000
+    expiringmembers = col.count_documents({ 'membership_expiration' : { '$gt' :  startdate, '$lt' : enddate}})
+    print(expiringmembers)
+    return expiringmembers
+

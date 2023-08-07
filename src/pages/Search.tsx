@@ -20,6 +20,9 @@ type Organization = {
   tMin:Number
   tMax:Number
   consent:boolean
+  active_member:boolean
+  approved:boolean
+  membership_expiration:Number
 }
 
 function Search() {
