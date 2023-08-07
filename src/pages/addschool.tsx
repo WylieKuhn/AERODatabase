@@ -1,20 +1,11 @@
-import React, { useState, useEffect } from 'react';
-import logo from './images/logo.jpg';
+import React, { useState } from 'react';
 import '../App.css';
-import ResponsiveAppBar from '../components/Bar';
-import Stack from '@mui/material/Stack';
 import Button from '@mui/material/Button';
-import Box from '@mui/material/Box';
 import TextField from '@mui/material/TextField';
-import Paper from '@mui/material/Paper';
-import Picker from '../components/Picker';
-import FormGroup from '@mui/material/FormGroup';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import Checkbox from '@mui/material/Checkbox';
-import { FormControl, Grid, FormLabel } from '@mui/material';
-import FormControlContext from '@mui/material/FormControl/FormControlContext';
-import { text } from 'node:stream/consumers';
-import { wait } from '@testing-library/user-event/dist/utils';
+import { Grid } from '@mui/material';
+
 import {
   MuiTelInput,
   MuiTelInputCountry,
@@ -284,11 +275,6 @@ export function AddSchool() {
           </Grid>
         </Grid>
       </Grid>
-
-
-
-
-
 
       <br></br>
     </div>

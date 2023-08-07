@@ -8,13 +8,26 @@ from fastapi.encoders import jsonable_encoder
 from fastapi.responses import JSONResponse
 
 app = FastAPI()
+origins = [
+    "http://localhost:3000"
 
+]
 
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=['*'],
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 
 #define FastAPI app 
 
-class School(BaseModel):
-    orgName:str
+uri = f"mongodb+srv://wyliekuhn:{mongoKey}@cluster0.xg1yk.mongodb.net/?retryWrites=true&w=majority"
+#Defining MongoDB Connections
+client = MongoClient(uri)
+db = client['AERO']
+col = db['Members']
 
 #Defining the model for the school payload
 class SchoolModel(BaseModel):

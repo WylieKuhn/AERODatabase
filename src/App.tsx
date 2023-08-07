@@ -1,6 +1,7 @@
 import React from 'react';
 import './App.css';
 import { Route, Router, Routes, Link } from 'react-router-dom';
+import AltHome from './pages/althome';
 
 import Home from './pages/home';
 import Search from './pages/Search';
@@ -25,6 +26,8 @@ import HistoryOfAERO from './pages/historyofaero';
 import EduModels from './pages/edumodels';
 import Individual from './pages/individual';
 import Jerry from './pages/jerry';
+import Addjob from "./pages/addjob";
+import Account from "./pages/account";
 
 
 const pages = [{text: "Find A School", linkRoute: "/pages/search"},
@@ -53,10 +56,10 @@ function ResponsiveAppBar() {
   };
 
   return (
-    <AppBar position="static">
+    <AppBar sx={{bgcolor: "white"}} position="static">
       <Container maxWidth="xl">
         <Toolbar disableGutters>
-          <SchoolIcon sx={{ display: { xs: 'none', md: 'flex' }, mr: 1 }} />
+          <SchoolIcon sx={{ display: { xs: 'none', md: 'flex' }, color: 'blue', mr: 1 }} />
           <Typography
             variant="h6"
             noWrap
@@ -68,7 +71,7 @@ function ResponsiveAppBar() {
               fontFamily: 'monospace',
               fontWeight: 700,
               letterSpacing: '.3rem',
-              color: 'inherit',
+              color: 'black',
               textDecoration: 'none',
             }}
           >
@@ -105,7 +108,7 @@ function ResponsiveAppBar() {
               }}
             >
                 {pages.map((page) => (
-                  <Link to={page.linkRoute} style={{ textDecoration: 'none', color: 'inherit' }}>
+                  <Link to={page.linkRoute} style={{ textDecoration: 'none', color: 'black' }}>
                     <MenuItem key={page.text} onClick={handleCloseNavMenu}>
                       <Typography textAlign="center">{page.text}</Typography>
                     </MenuItem>
@@ -129,7 +132,7 @@ function ResponsiveAppBar() {
               fontFamily: 'monospace',
               fontWeight: 700,
               letterSpacing: '.3rem',
-              color: 'inherit',
+              color: 'black',
               textDecoration: 'none',
             }}
           >
@@ -141,7 +144,7 @@ function ResponsiveAppBar() {
               <Button
                 key={page.text}
                 onClick={handleCloseNavMenu}
-                sx={{ my: 2, color: 'white', display: 'block' }}
+                sx={{ my: 2, color: 'black', display: 'block' }}
               >
                 {page.text}
               </Button>
@@ -190,7 +193,7 @@ function App() {
     <>
     <ResponsiveAppBar />
       <Routes>
-        <Route path="/" element={<Home />} />
+        <Route path="/" element={<AltHome />} />
         <Route path='/pages/search' element={<Search />} />
         <Route path='/pages/addschool' element={<AddSchool />} />
         <Route path="/pages/about" element={<About />} />
@@ -199,6 +202,9 @@ function App() {
         <Route path="/pages/edumodels" element={<EduModels />} />
         <Route path="/pages/individual" element={<Individual />} />
         <Route path="/pages/jerry" element={<Jerry />} />
+        <Route path="/pages/join" element={<Individual />} />
+        <Route path="/pages/addjob" element={<Addjob />} />
+        <Route path="/pages/account" element={<Account />} />
       </Routes>
         </>);
 }

@@ -25,7 +25,7 @@ export default function AboutAEROCard() {
             About AERO
           </Typography>
           <Typography variant="body2" color="text.secondary">
-            AERO is the world's premeire Alternative education resource, drawing from a
+            AERO is the world's premiere Alternative education resource, drawing from a
             deep well of historical knowledge and our network of peers.
           </Typography>
         </CardContent>

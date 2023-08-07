@@ -10,7 +10,7 @@ import { Link } from 'react-router-dom';
 
 export default function JoinCard() {
   return (
-    <Link to='./pages/addschool'>
+    <Link to='./pages/join'>
     <Card sx={{ maxWidth: 345 }}>
       <CardActionArea>
         <CardMedia

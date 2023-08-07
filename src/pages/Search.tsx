@@ -4,8 +4,6 @@ import TextField from '@mui/material/TextField';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import Checkbox from '@mui/material/Checkbox';
 import { Grid, Link, Typography, Button } from '@mui/material';
-import CountryBox from '../components/countrybox';
-import StatesBox from '../components/combo';
 import Autocomplete from '@mui/material/Autocomplete/Autocomplete';
 
 type Organization = {
