@@ -1,6 +1,6 @@
 from fastapi import FastAPI
 from pydantic import BaseModel
-from key_file import mongoKey
+from keyfile import mongokey
 from pymongo.mongo_client import MongoClient
 from fastapi.middleware.cors import CORSMiddleware
 from uuid import uuid4
@@ -23,7 +23,7 @@ app.add_middleware(
 
 #define FastAPI app 
 
-uri = f"mongodb+srv://wyliekuhn:{mongoKey}@cluster0.xg1yk.mongodb.net/?retryWrites=true&w=majority"
+uri = f"mongodb+srv://wyliekuhn:{mongokey}@cluster0.xg1yk.mongodb.net/?retryWrites=true&w=majority"
 #Defining MongoDB Connections
 client = MongoClient(uri)
 db = client['AERO']
@@ -156,3 +156,29 @@ async def post(search_params: Search):
     if not results:
         results = {}       
     return list(results)
+
+
+@app.get("/api/v1/totalsas")
+async def sasTotal():
+    categories = ["Started By A School Starter"]
+
+    query_filter = {
+    "categories": {
+        "$in": categories
+        }
+    }
+
+    sas_count = col.count_documents(query_filter)
+    print(sas_count)
+    return sas_count
+
+@app.get("/api/v1/totalorgs")
+async def totalOrgs():
+    
+    query_filter = {
+        "consent": True
+        }
+
+    x=col.count_documents(query_filter)
+    print(x)
+    return x
